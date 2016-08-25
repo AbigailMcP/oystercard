@@ -25,13 +25,14 @@ MINIMUM_BALANCE = 1
   end
 
   def touch_out(station)
-    raise "Penalty fare: No touch in" if deduct(@current_journey.fare) == 6
+    #raise "Penalty fare: No touch in" if deduct(@current_journey.fare) == 6
     @current_journey.finish(station)
+    deduct(@current_journey.fare)
   end
-  
+
   # private
 
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :current_journey
 
   def deduct(amount)
     @balance -= amount

@@ -46,8 +46,9 @@ describe Oystercard do
     end
 
     it 'charges penalty fee when touched in twice in a row' do
-
-
+      subject.top_up(20)
+      subject.touch_in(station)
+      expect{subject.touch_in(station)}.to change{subject.instance_variable_get(:@balance)}.by(-6)
     end
 
     xit 'charges standard fee when touched in and out' do

@@ -15,24 +15,26 @@ class Journey
   def complete?
 
     case
-    when !!current_journey[:in] && !!current_journey[:out]
-      true
-    when !current_journey[:in] && !current_journey[:out]
-      true
-    when !!current_journey[:in] && !current_journey[:out]
+    # when !!current_journey[:in] && !!current_journey[:out]
+    #   true
+    # when !current_journey[:in] && !current_journey[:out]
+    #   true
+    when !!@history[-1][:in] && !@history[-1][:out]
       false
-    when !current_journey[:in] && !!current_journey[:out]
+    when !@history[-1][:in] && !!@history[-1][:out]
       false
+    else
+      true
     end
 
   end
 
   def start(station)
-    @current_journey[:in] = station
+    @history << {:in => station, :out => nil}
   end
 
   def finish(station)
-    @current_journey[:out] = station
+    @history[-1][:out] = station
   end
 
   def completed_journeys
@@ -43,8 +45,7 @@ class Journey
     complete? ? MINIMUM_FARE : PENALTY_FARE
   end
 
-private
 
-attr_reader :current_journey
+attr_reader :current_journey, :history
 
 end
