@@ -19,7 +19,12 @@ MINIMUM_BALANCE = 1
 
   def touch_in(station)
     fail 'below minimum balance' if empty?
-  #      current_journey.complete? ? new : deduct(fare), new
+    if current_journey.complete?
+      @current_journey = Journey.new
+    else
+      deduct(@current_journey.fare)
+      @current_journey = Journey.new
+    end
     @current_journey.start(station)
   end
 

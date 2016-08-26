@@ -1,7 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
-      let(:journey) {double :journey, start: nil, finish: nil, fare: 1, complete?: false, check_previous_journey: 0}
+      let(:journey) {double :journey, start: nil, finish: nil, fare: 1, complete?: false}
       let(:journey_class_double) {double :journey_class_double, new: journey}
       subject(:oystercard) {described_class.new(journey: journey_class_double)}
       let(:amount) { double :amount }
@@ -24,11 +24,11 @@ describe Oystercard do
 
   describe 'interaction with Journey class' do
 
-    it 'creates a new journey on touch in' do
-        subject.top_up(20)
-        subject.touch_in(station)
-        expect(journey).to have_received(:start)
-    end
+    # it 'creates a new journey on touch in' do
+    #     subject.top_up(20)
+    #     subject.touch_in(station)
+    #     expect(journey).to have_received(:start)
+    # end
 
     it 'sends a finish message to journey class' do
       subject.top_up(20)
@@ -39,16 +39,23 @@ describe Oystercard do
   end
 
   describe 'charging for journeys' do
-    it 'charges a fee when touched out' do
+
+    before(:each) do
       subject.top_up(20)
       subject.touch_in(station)
+    end
+
+    it 'charges a fee when touched out' do
       expect{subject.touch_out(station)}.to change{subject.instance_variable_get(:@balance)}.by(-1)
     end
 
     it 'charges a penalty fee when touched in twice' do
-      subject.top_up(20)
-      subject.touch_in(station)
       expect{subject.touch_in(station)}.to change{subject.instance_variable_get(:@balance)}.by(-6)
+    end
+
+    it 'charges a penalty fee when touched out twice' do
+      subject.touch_out(station)
+      expect{subject.touch_out(station)}.to change{subject.instance_variable_get(:@balance)}.by(-6)
     end
 
   end
