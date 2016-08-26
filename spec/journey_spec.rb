@@ -17,7 +17,9 @@ describe '#fare' do
     expect(subject.fare).to eq Journey::MINIMUM_FARE
   end
 
-  xit 'charges a penalty fare for an incomplete journey' do
+  it 'charges a penalty fare for an incomplete journey' do
+    subject.start(station)
+    subject.finish(station)
     subject.finish(station)
     expect(subject.fare).to eq Journey::PENALTY_FARE
   end

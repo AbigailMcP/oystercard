@@ -15,10 +15,6 @@ class Journey
   def complete?
 
     case
-    # when !!current_journey[:in] && !!current_journey[:out]
-    #   true
-    # when !current_journey[:in] && !current_journey[:out]
-    #   true
     when !!@history[-1][:in] && !@history[-1][:out]
       false
     when !@history[-1][:in] && !!@history[-1][:out]
@@ -34,7 +30,11 @@ class Journey
   end
 
   def finish(station)
-    @history[-1][:out] = station
+    if complete?
+      @history << {:in => nil, :out => station}
+    else
+      @history[-1][:out] = station
+    end
   end
 
   def completed_journeys

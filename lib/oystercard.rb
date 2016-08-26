@@ -28,6 +28,7 @@ MINIMUM_BALANCE = 1
     #raise "Penalty fare: No touch in" if deduct(@current_journey.fare) == 6
     @current_journey.finish(station)
     deduct(@current_journey.fare)
+    @current_journey = Journey.new
   end
 
   # private
