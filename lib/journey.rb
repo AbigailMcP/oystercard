@@ -5,41 +5,49 @@ class Journey
   MINIMUM_FARE = 1
   PENALTY_FARE = 6
 
-  attr_reader :history
-
   def initialize()
-    @history = []
+    @history = [{:in => nil, :out => nil}]
     @current_journey = {}
   end
 
   def complete?
 
-    case
-    when !!@history[-1][:in] && !@history[-1][:out]
-      false
-    when !@history[-1][:in] && !!@history[-1][:out]
-      false
-    else
-      true
-    end
+    !!@current_journey[:in] && !!@current_journey[:out]
+
+    # !!@history[-1][:in] && !!@history[-1][:out]
+    # case
+    # when !!@history[-1][:in] && !@history[-1][:out]
+    #   false
+    # when !@history[-1][:in] && !!@history[-1][:out]
+    #   false
+    # else
+    #   true
+    # end
 
   end
 
   def start(station)
-    @history << {:in => station, :out => nil}
+    @current_journey = {:in => station, :out => nil}
+    @history << @current_journey
   end
 
   def finish(station)
     if complete?
-      @history << {:in => nil, :out => station}
+      @current_journey = {:in => nil, :out => station}
     else
-      @history[-1][:out] = station
+      @current_journey[:out] = station
     end
+    @history << @current_journey
   end
 
-  def completed_journeys
-    @current_journey
+  def check_previous_journey
+    @current_journey = @history[-1]
+    complete? ? PENALTY_FARE : 0
   end
+
+  # def completed_journeys
+  #   @current_journey
+  # end
 
   def fare
     complete? ? MINIMUM_FARE : PENALTY_FARE

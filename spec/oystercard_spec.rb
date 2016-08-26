@@ -1,7 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
-      let(:journey) {double :journey, start: nil, finish: nil, fare: 1, complete?: false}
+      let(:journey) {double :journey, start: nil, finish: nil, fare: 1, complete?: false, check_previous_journey: 0}
       let(:journey_class_double) {double :journey_class_double, new: journey}
       subject(:oystercard) {described_class.new(journey: journey_class_double)}
       let(:amount) { double :amount }
