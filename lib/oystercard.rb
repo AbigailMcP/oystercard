@@ -31,6 +31,10 @@ MINIMUM_BALANCE = 1
     @current_journey = Journey.new
   end
 
+  # def in_journey?
+  #   @in_journey
+  # end
+
   # private
 
   attr_reader :balance, :entry_station, :current_journey

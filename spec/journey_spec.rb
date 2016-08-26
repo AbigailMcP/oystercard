@@ -4,13 +4,18 @@ describe Journey do
 
   let(:station) { double :station}
 
-  it 'creates a hash inside an @journey array for each journey with entry station and exit station' do
+  it 'stores entry station' do
     subject.start(station)
-    subject.finish(station)
-    expect(subject.instance_variable_get(:@current_journey)).to include({:in => station, :out => station})
+    expect(subject.instance_variable_get(:@entry_station)).to eq station
   end
 
-describe '#fare' do
+  it 'stores exit station' do
+    subject.start(station)
+    subject.finish(station)
+    expect(subject.instance_variable_get(:@exit_station)).to eq station
+  end
+
+xdescribe '#fare' do
   it 'calculates a fare' do
     subject.start(station)
     subject.finish(station)
