@@ -15,6 +15,13 @@ describe Journey do
     expect(subject.instance_variable_get(:@exit_station)).to eq station
   end
 
+  it 'knows whether its in journey' do
+    subject.start(station)
+    subject.finish(station)
+    expect(subject).to be_complete
+  end
+
+
 xdescribe '#fare' do
   it 'calculates a fare' do
     subject.start(station)
