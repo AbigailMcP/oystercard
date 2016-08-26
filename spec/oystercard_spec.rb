@@ -1,7 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
-      let(:journey) {double :journey, start: nil, finish: nil, fare: 6, complete?: false}
+      let(:journey) {double :journey, start: nil, finish: nil, fare: 1, complete?: false}
       let(:journey_class_double) {double :journey_class_double, new: journey}
       subject(:oystercard) {described_class.new(journey: journey_class_double)}
       let(:amount) { double :amount }
@@ -39,22 +39,12 @@ describe Oystercard do
   end
 
   describe 'charging for journeys' do
-    it 'charges penalty fee when only touched out' do
-      subject.top_up(20)
-      subject.touch_out(station)
-      expect{subject.touch_out(station)}.to change{subject.instance_variable_get(:@balance)}.by(-6)
-    end
-
-    it 'charges penalty fee when touched in twice in a row' do
+    it 'charges a fee when touched out' do
       subject.top_up(20)
       subject.touch_in(station)
-      expect{subject.touch_in(station)}.to change{subject.instance_variable_get(:@balance)}.by(-6)
+      expect{subject.touch_out(station)}.to change{subject.instance_variable_get(:@balance)}.by(-1)
     end
 
-    xit 'charges standard fee when touched in and out' do
-
-
-    end
   end
 
 end
