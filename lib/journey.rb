@@ -7,7 +7,7 @@ class Journey
 
   attr_reader :history
 
-  def initialize
+  def initialize()
     @history = []
     @current_journey = {}
   end
