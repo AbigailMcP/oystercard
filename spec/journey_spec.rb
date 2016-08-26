@@ -21,15 +21,14 @@ describe Journey do
     expect(subject).to be_complete
   end
 
-
-xdescribe '#fare' do
+describe '#fare' do
   it 'calculates a fare' do
     subject.start(station)
     subject.finish(station)
     expect(subject.fare).to eq Journey::MINIMUM_FARE
   end
 
-  it 'charges a penalty fare for an incomplete journey' do
+  xit 'charges a penalty fare for an incomplete journey' do
     subject.start(station)
     subject.finish(station)
     subject.finish(station)
