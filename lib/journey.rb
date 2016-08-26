@@ -3,6 +3,7 @@ require_relative 'oystercard'
 class Journey
 
   MINIMUM_FARE = 1
+  PENALTY_FARE = 6
 
   def initialize(entry_station = nil)
     @entry_station = entry_station
@@ -22,7 +23,7 @@ class Journey
   end
 
   def fare
-    complete? ? MINIMUM_FARE : 0
+    complete? ? MINIMUM_FARE : PENALTY_FARE
   end
 
 private

@@ -19,23 +19,19 @@ MINIMUM_BALANCE = 1
 
   def touch_in(station)
     fail 'below minimum balance' if empty?
-    #@current_journey = Journey.new
-    deduct(@current_journey.check_previous_journey)
+  #      current_journey.complete? ? new : deduct(fare), new
     @current_journey.start(station)
   end
 
   def touch_out(station)
-    #raise "Penalty fare: No touch in" if deduct(@current_journey.fare) == 6
+  #      current_journey.complete? ?  new, finish, deduct(fare):  finish, deduct
     @current_journey.finish(station)
+
     deduct(@current_journey.fare)
-    @current_journey = Journey.new
+
   end
 
-  # def in_journey?
-  #   @in_journey
-  # end
-
-  # private
+private
 
   attr_reader :balance, :entry_station, :current_journey
 
